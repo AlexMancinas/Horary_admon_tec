@@ -26,9 +26,9 @@ const getTeacherById = async (req, res) => {
 
 const createTeacher = async (req, res) => {
     try {
-        const { nombre, domicilio, email, telefono, horarioDisponible } = req.body;
+        const { nombre, domicilio, email, telefono, disponibilidad } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`INSERT INTO Profesores VALUES ('${nombre}', '${domicilio}', '${email}', '${telefono}', '${horarioDisponible}')`);
+        const result = await pool.request().query(`INSERT INTO Profesores VALUES ('${nombre}', '${domicilio}', '${email}', '${telefono}', '${disponibilidad}')`);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);

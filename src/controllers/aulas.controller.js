@@ -26,9 +26,9 @@ const getClassById = async (req, res) => {
 
 const createClass = async (req, res) => {
     try {
-        const { nombre, capacidad } = req.body;
+        const { nombre, capacidad, disponibilidad } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`INSERT INTO Aulas VALUES ('${nombre}', '${capacidad}')`);
+        const result = await pool.request().query(`INSERT INTO Aulas VALUES ('${nombre}', '${capacidad}', ${disponibilidad})`);
         res.status(201).json(result.recordset);
     } catch (error) {
         res.status(500);
@@ -40,9 +40,9 @@ const createClass = async (req, res) => {
 const updateClass = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, capacidad } = req.body;
+        const { nombre, capacidad, disponibilidad } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`UPDATE Aulas SET nombre = '${nombre}', capacidad = '${capacidad}' WHERE AulaID = ${id}`);
+        const result = await pool.request().query(`UPDATE Aulas SET nombre = '${nombre}', capacidad = '${capacidad}', disponibilidad = '${disponibilidad}' WHERE AulaID = ${id}`);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);

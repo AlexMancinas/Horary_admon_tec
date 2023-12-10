@@ -60,11 +60,27 @@ const deleteHorarios_maestro = async (req, res) => {
         res.send(error.message);
     }
 }
+//-- Consulta para verificar que al maestro no le toque darle clases a dos grupos en el mismo horario
+const viewTheachersClassInSameHour = async ( res, req) => {
+    try {
+        const pool = await getConnection();
+        const {hora} = req.params;
+        console.log(req.body)
+        // const result = await pool.request().query(`SELECT horario_maestros_id,profesor_id,hora FROM horarios_maestros WHERE hora = '${CompareHour}' GROUP BY horario_maestros_id,profesor_id,hora HAVING COUNT(*) > 0`);
+        res.send(200)
+        res.json(hora);
+    } catch (error) {
+        res.status(500);
+        console.log(error)
+        res.send(error.message);
+    }
+}
 
 module.exports = {
     getHorarios_maestros,
     getHorarios_maestroById,
     createHorarios_maestro,
     updateHorarios_maestro,
-    deleteHorarios_maestro
+    deleteHorarios_maestro,
+    viewTheachersClassInSameHour
 }

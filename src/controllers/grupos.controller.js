@@ -28,9 +28,9 @@ const getGroupById = async (req, res) => {
 
 const createGroup = async (req, res) => {
     try {
-        const { nombre} = req.body;
+        const { nombre,carrera,semestre} = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`INSERT INTO Grupos VALUES ('${nombre}')`);
+        const result = await pool.request().query(`INSERT INTO Grupos VALUES ('${nombre}','${carrera}','${semestre}')`);
         res.status(201).json(result.recordset);
     } catch (error) {
         res.status(500);
@@ -41,9 +41,9 @@ const createGroup = async (req, res) => {
 const updateGroup = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre } = req.body;
+        const { nombre,carrera,semestre } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`UPDATE Grupos SET nombre = '${nombre}' WHERE GrupoID = ${id}`);
+        const result = await pool.request().query(`UPDATE Grupos SET nombre = '${nombre}', carrera='${carrera}', semestre='${semestre}' WHERE GrupoID = ${id}`);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);

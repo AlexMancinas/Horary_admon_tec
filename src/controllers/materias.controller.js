@@ -26,9 +26,9 @@ const getSubjectById = async (req, res) => {
 
 const createSubject = async (req, res) => {
     try {
-        const { nombre, creditosTeoricos, creditosPracticos, carrera, requisitos } = req.body;
+        const { nombre, creditosTeoricos, creditosPracticos, carrera } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`INSERT INTO Materias VALUES ('${nombre}', '${creditosTeoricos}', '${creditosPracticos}', '${carrera}', '${requisitos}')`);
+        const result = await pool.request().query(`INSERT INTO Materias VALUES ('${nombre}', '${creditosTeoricos}', '${creditosPracticos}', '${carrera}')`);
       
         res.status(201).json(result.recordset);
     } catch (error) {
@@ -40,9 +40,9 @@ const createSubject = async (req, res) => {
 const updateSubject = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, creditosTeoricos, creditosPracticos, carrera, requisitos } = req.body;
+        const { nombre, creditosTeoricos, creditosPracticos, carrera } = req.body;
         const pool = await getConnection();
-        const result = await pool.request().query(`UPDATE Materias SET nombre = '${nombre}', creditosTeoricos = '${creditosTeoricos}', creditosPracticos = '${creditosPracticos}', carrera = '${carrera}', requisitos = '${requisitos}' WHERE MateriaID = ${id}`);
+        const result = await pool.request().query(`UPDATE Materias SET nombre = '${nombre}', creditosTeoricos = '${creditosTeoricos}', creditosPracticos = '${creditosPracticos}', carrera = '${carrera}' WHERE MateriaID = ${id}`);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);

@@ -1,0 +1,8 @@
+GET http://localhost:8081/api/v1/grupos/1/
+
+Content-Type: application/json
+{
+    "GrupoID":5,
+    "id":8,
+    "MateriaID":1
+}

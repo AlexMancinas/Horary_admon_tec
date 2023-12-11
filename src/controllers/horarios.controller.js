@@ -87,12 +87,13 @@ const deleteSchedule = async (req, res) => {
     }
 }
 
-//-- Consulta para verificar que no le toque la misma materia a dos grupos en la misma hora con el mismo maestro
-const viewGroupsInSameHour = async ( res, req) => {
-    try {
+//--Consulta pAra ver el horario de un solo maestro-- 
+const viewtheachersschedule = async(req,res)=>{
+        try {
+        console.log(req.params);
+        const { id } = req.params;
         const pool = await getConnection();
-        const {GrupoID,MateriaID,HoraInicio} = req.body;
-        const result = await pool.request().query(`SELECT * FROM horarios WHERE GrupoID =' ${GrupoID}' AND MateriaID = '${MateriaID}' AND HoraInicio =${HoraInicio}`);
+        const result = await pool.request().query(`SELECT * FROM Horarios WHERE ProfesorID = ${id}`);
         res.json(result.recordset);
     } catch (error) {
         res.status(500);
@@ -100,12 +101,31 @@ const viewGroupsInSameHour = async ( res, req) => {
     }
 }
 
+//--Consulta para filtrar horaio por carrera y grupo--
+const viewGroupAndRaceInHorario = async(req,res)=>{
+    try {
+    console.log(req.params);
+    const { semestre, carrera, grupo } = req.params;
+    const pool = await getConnection();
+    const result = await pool.request().query(`SELECT * FROM Horarios WHERE Semestre=${semestre} AND Carrera='${carrera}' AND GrupoID=${grupo}
+    `);
+    res.json(result.recordset);
+} catch (error) {
+    res.status(500);
+    res.send(error.message);
+}
+}
+
+
+
+
 module.exports = {
     getAllSchedules,
     getScheduleById,
     createSchedule,
     updateSchedule,
     deleteSchedule,
-    viewGroupsInSameHour
+    viewtheachersschedule,
+    viewGroupAndRaceInHorario,
 }
 
